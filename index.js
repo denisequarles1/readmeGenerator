@@ -7,10 +7,10 @@ const util = require('util');
 const api = require('./utility/api.js');
 const generateMarkdown = require('./utility/generateMarkdown.js');
 
-// Array of questions for user
+// Array of questions for userto answer
 const questions = [
     {
-        //Gets the user's GitHub username
+       //Gets the user's GitHub username
        type: 'input',
        message: "What is your GitHub username?",
        name:'username',
@@ -29,7 +29,6 @@ const questions = [
         message: "What is the project description?",
         name: 'description',  
     },
-
 
     //Gets installation steps
     {
@@ -53,21 +52,21 @@ const questions = [
         name: 'license'
     },
 
-    //Gets contributing information
+    //Gets instructions how to contribute to the project
     {
         type: 'input',
         message: "Provide instructions how developers can contribute to your project.",
         name: 'contributing'
     },
 
-    //Gets tests information
+    //Gets test information
     {
         type: 'input',
         message: "Provide information regarding tests you conducted.",
         name: 'tests'
     },
     
-    //Gets email
+    //Gets user's email
     {
         type: 'input',
         message: "Enter your email address where you can be reached for additional questions.",
@@ -75,7 +74,7 @@ const questions = [
     },
 ];
 
-// function to write README file
+// Function to write README file
 function writeToFile(fileName, data) 
 {
     fs.writeFile(fileName, data, err => 
@@ -91,23 +90,21 @@ function writeToFile(fileName, data)
 
 const writeFileAsync = util.promisify(writeToFile);
 
-// function to initialize program
+// Function to initialize program
 async function init() {
     try {
 
-        // Prompt user questions
+        // Prompts for user questions
         const userResponses = await inquirer.prompt(questions);
         console.log("Your responses: ", userResponses);
-        console.log("Thank you for your responses! Fetching your GitHub data next...");
+        console.log("Thank you for your responses.");
     
         // Call GitHub api for user info
         const userInfo = await api.getUser(userResponses);
-        console.log("Your GitHub user info: ", userInfo);
+        
     
         // Pass Inquirer userResponses and GitHub userInfo to generateMarkdown
-        console.log("Generating your README next...")
         const markdown = generateMarkdown(userResponses, userInfo);
-        console.log(markdown);
     
         // Write markdown to file
         await writeFileAsync('GeneratedREADME.md', markdown);
@@ -118,5 +115,5 @@ async function init() {
 
 }
 
-// function call to initialize program
+// Function call to initialize program
 init();

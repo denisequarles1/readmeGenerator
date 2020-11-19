@@ -1,5 +1,7 @@
 function generateMarkdown(userResponses, userInfo) {
 
+  
+
   // Generate Table of Contents based on user input
   let draftToC = `## Table of Contents`;
 
